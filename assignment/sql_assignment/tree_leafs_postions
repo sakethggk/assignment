@@ -1,0 +1,30 @@
+SELECT Id, 'Root' 
+FROM NodeTable
+WHERE ParentId IS NULL
+UNION
+SELECT DISTINCT N1.Id, 'Inner'
+FROM NodeTable N1
+JOIN NodeTable N2
+  ON N2.ParentId = N1.ID
+WHERE N1.ParentId IS NOT NULL
+UNION
+SELECT N1.Id, 'Leaf' 
+FROM NodeTable N1
+LEFT JOIN NodeTable N2 
+  ON N1.Id = N2.ParentId
+WHERE N2.ParentId IS NULL;
+
+
+CREATE TABLE NodeTable (
+  id integer,
+  ParentId integer
+);
+
+INSERT INTO NodeTable VALUES 
+(1, 2),
+(3, 2),
+(6, 8),
+(9, 8),
+(2, 5),
+(8, 5),
+(5, null);

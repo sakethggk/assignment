@@ -1,0 +1,23 @@
+CREATE TABLE OCCUPATIONS (
+  NAME TEXT,
+  OCCUPATION TEXT
+);
+
+INSERT INTO OCCUPATIONS VALUES 
+('Asqwecy', 'Professor'),
+('Kasd', 'Professor'),
+('Mjsdra', 'Actor'),
+('Fsdffet', 'Actor'),
+('Saketh','Actor');
+
+
+(
+  SELECT CONCAT(NAME, '(', SUBSTRING(OCCUPATION, 1, 1), ')') as THETEXT, '1' as SELECTNUMBER
+    FROM OCCUPATIONS
+)
+UNION ALL 
+(
+  SELECT CONCAT('There are total ', COUNT(*),' ', OCCUPATION, (IF (COUNT(*) > 1, 's',''))) as THETEXT, '2' as SELECTNUMBER
+   FROM OCCUPATIONS GROUP BY OCCUPATION
+)
+ORDER BY SELECTNUMBER ASC, THETEXT ASC;
